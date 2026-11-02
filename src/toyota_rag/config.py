@@ -1,8 +1,11 @@
 from pathlib import Path
-from pydantic_settings import BaseSettings
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
     # Пути
     BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
     DATA_DIR: Path = BASE_DIR / "data"
@@ -19,10 +22,6 @@ class Settings(BaseSettings):
     # Параметры чанкинга
     CHUNK_SIZE: int = 1200
     CHUNK_OVERLAP: int = 150
-
-    class Config:
-        env_file = ".env"
-        extra = "ignore"
 
 
 settings = Settings()
